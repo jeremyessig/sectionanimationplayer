@@ -79,7 +79,7 @@ class SectionAnimationPlayer {
             })
     }
 
-    hidde(target = this.target){
+    hide(target = this.target){
         if(target !== this.target){
             target = document.querySelector(target);
         }
