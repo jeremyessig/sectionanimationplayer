@@ -1,17 +1,16 @@
 class SectionAnimationPlayer {
-
     //Constructeur de la classe
-    constructor(selector, target = selector) {
-      this.selector = document.querySelector(selector);
+    // trigger: element declancheur de l'animation
+    // target: cible a animer
+    constructor(trigger, target = trigger, root=null, threshold=0.5,rootMargin="0px") {
+      this.trigger = document.querySelector(trigger);
       this.target = document.querySelector(target);
       this.options = {
-        root:null,
-        threshold:0.5,
-        rootMargin:"0px"
+        root:root,
+        threshold:threshold,
+        rootMargin:rootMargin
     }
         this.observer = null
-
-      console.log(this.target);
     }
 
     //Observeur des éléments et cibles
@@ -33,7 +32,10 @@ class SectionAnimationPlayer {
                     }
                 }
             })
-        },this.options);      
+        },this.options);  
+        
+        //Initialise l'observation
+        this.observer.observe(this.trigger);
     }
 
     static addClass(target, anim){
@@ -41,7 +43,6 @@ class SectionAnimationPlayer {
     }
 
     randomTime(min, max){
-        console.log(Math.floor(Math.random() * (max - min + 1) + min));
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
@@ -54,7 +55,6 @@ class SectionAnimationPlayer {
                 SectionAnimationPlayer.addClass(this.target, animation);
             }, delay)
         })
-        this.observer.observe(this.selector);
     }
 
     //Joue les animations sur tous les enfants de la cible de maniere independante
@@ -66,7 +66,6 @@ class SectionAnimationPlayer {
                     SectionAnimationPlayer.addClass(child, animation)
                 }, delay));
         })
-        this.observer.observe(this.selector);
     }
 
     //Joue tous les enfants d'une section indiques en parametre de maniere aleatoire
@@ -80,7 +79,6 @@ class SectionAnimationPlayer {
                     SectionAnimationPlayer.addClass(child, animation)
                 }, this.randomTime(min, max)));
             })
-            this.observer.observe(this.selector);
     }
 
 }
