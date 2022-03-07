@@ -18,7 +18,6 @@ class SectionAnimationPlayer {
 
          this.observer = new IntersectionObserver(function(entries,observer){
             entries.forEach(entry => {
-                console.log(entry);
                 if(entry.isIntersecting == true)
                 {
                     //Appel une methode a l'entree de la cible
@@ -26,10 +25,10 @@ class SectionAnimationPlayer {
                         callbackIn();
                     }
                 }else{
-                    // Appel une methode lorsque sorti de la cible
-                    if(typeof callbackOut == "function"){
-                        callbackOut();
-                    }
+                     // Appel une methode lorsque sorti de la cible
+                     if(typeof callbackOut == "function"){
+                         callbackOut();
+                     }
                 }
             })
         },this.options);  
@@ -60,8 +59,7 @@ class SectionAnimationPlayer {
     //Joue les animations sur tous les enfants de la cible de maniere independante
     playCssAnimationOnChildren(animation=[], children=[], delay){
         this.setObserver(this.target, animation, ()=>{
-            const childrenFetched = document.querySelectorAll(children) 
-            console.log(childrenFetched);
+            const childrenFetched = document.querySelectorAll(children);
                 childrenFetched.forEach(child => setTimeout(()=>{
                     SectionAnimationPlayer.addClass(child, animation)
                 }, delay));
@@ -74,7 +72,7 @@ class SectionAnimationPlayer {
         let min = ranTime[1];
         this.setObserver(this.target, animation, ()=>{
             const childrenFetched = document.querySelectorAll(children) 
-            console.log(childrenFetched);
+            //console.log(childrenFetched);
                 childrenFetched.forEach(child => setTimeout(()=>{
                     SectionAnimationPlayer.addClass(child, animation)
                 }, this.randomTime(min, max)));
