@@ -3,13 +3,18 @@ class SectionAnimationPlayer {
     // trigger: element declancheur de l'animation
     // target: cible a animer
     constructor(trigger, target = trigger, root=null, threshold=0.5,rootMargin="0px") {
-      this.trigger = document.querySelector(trigger);
-      this.target = document.querySelector(target);
-      this.options = {
-        root:root,
-        threshold:threshold,
-        rootMargin:rootMargin
-    }
+        this.trigger = document.querySelector(trigger);
+        this.target = document.querySelector(target);
+        if(this.trigger !== null && this.target !== null ){
+            this.existing = true;
+            this.options = {
+              root:root,
+              threshold:threshold,
+              rootMargin:rootMargin
+          }
+        }else{
+            this.existing = false;
+        }
         this.observer = null
     }
 
@@ -34,7 +39,10 @@ class SectionAnimationPlayer {
         },this.options);  
         
         //Initialise l'observation
-        this.observer.observe(this.trigger);
+        if(this.existing){
+
+            this.observer.observe(this.trigger);
+        }
     }
 
     static addClass(target, anim){
@@ -45,10 +53,14 @@ class SectionAnimationPlayer {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
+
 // -----Methodes public 
 
     //Joue l'animation
-    playCssAnimation(animation=[], delay = 0){
+    playCssAnimation(animation=[], delay = 0, visible = true){
+        if(visible !== true){
+            this.hide()
+        }
         this.setObserver(this.target, animation, ()=>{
             setTimeout(()=>{
                 SectionAnimationPlayer.addClass(this.target, animation);
