@@ -13,7 +13,7 @@ class SectionAnimationPlayer {
               rootMargin:rootMargin
           }
         }else{
-            this.existing = false;
+            this.existing === false;
         }
         this.observer = null
     }
